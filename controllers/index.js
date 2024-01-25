@@ -68,6 +68,17 @@ async function getAverage(req, res) {
     console.log(error);
   }
 }
+async function getLedgerData(req, res) {
+  try {
+    const { Code, StartDate, EndDate, CCode } = req.body;
+    const query = `EXEC [dbo].[sp_GetAccountLedgerWeb] @Code = '${Code}', @FDate = '${StartDate}', @TDate = '${EndDate}', @CCode = '${CCode}'`;
+    // // Execute the query using the executeQuery function
+    const results = await executeQuery(query);
+    res.send(results);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 module.exports = {
   getCustomers,
@@ -75,4 +86,5 @@ module.exports = {
   getStocks,
   getBanks,
   getAverage,
+  getLedgerData,
 };
